@@ -2,13 +2,13 @@
 # @uthor: Shiv Mangal Singh Rajawat
 ###################################
 
-#####Configuring the provider as AWS
+#####Configuring the provider as AWS.
 
 provider "aws" {
   region = "${var.aws_region}"
 }
 
-##### Creating a VPC in user specified region
+##### Creating a VPC in user specified region.
 
 resource "aws_vpc" "main" {
   cidr_block           = "${var.cidr_prefix}.0.0/16"
@@ -16,11 +16,12 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames = "true"
 
   tags {
-    Name = "${var.vpc_name}-vpc"
+    Name = "${var.vpc_name}"
   }
 }
 
-##### Creating 6 subnets of which 3 are in AZ - "a" and 3 in AZ - "b". 
+##### Creating 6 subnets of which 3 are in AZ - "a" and 3 in AZ - "b".
+
 resource "aws_subnet" "priv_a1" {
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block        = "${var.cidr_prefix}.0.0/24"
@@ -78,6 +79,8 @@ resource "aws_subnet" "priv_b3" {
     Name = "${var.vpc_name}-priv-b3"
   }
 }
+
+##### Creating a virtual private gateway and attaching it to the created VPC.
 
 resource "aws_vpn_gateway" "vpn_gw" {
   vpc_id = "${aws_vpc.main.id}"
