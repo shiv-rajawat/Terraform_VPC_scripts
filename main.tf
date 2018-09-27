@@ -20,7 +20,7 @@ resource "aws_vpc" "main" {
   }
 }
 
-##### Creating 6 subnets of which 3 are in AZ - ""
+##### Creating 6 subnets of which 3 are in AZ - "a" and 3 in AZ - "b". 
 resource "aws_subnet" "priv_a1" {
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block        = "${var.cidr_prefix}.0.0/24"
