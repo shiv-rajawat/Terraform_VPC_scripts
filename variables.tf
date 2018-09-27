@@ -2,30 +2,20 @@
 ##### Remove or comment the default field of the variable to input custom values at the time of running the script.
 
 
-##### Initial two bytes of VPC CIDR block
+##### Initial two bytes of VPCs CIDR block
 
 variable "cidr_prefix"{
-  type = "string"
+  type = "list"
   description = "The first 16 bit prefix for a cidr block. For example, if the CIDR block needs to be 172.16.0.0/16. Enter 172.16"
-  default = "172.16"
+  default = ["172.16", "10.0"]
 }
 
-##### Initial two bytes of VPC CIDR block of second VPC
-
-variable "cidr_prefix_second"{
-  type = "string"
-  description = "The first 16 bit prefix for a cidr block. For example, if the CIDR block needs to be 10.0.0.0/16. Enter 10.0"
-  default = "10.0"
-}
-
-
-
-##### VPC name
+##### VPC names
 
 variable "vpc_name"{
   type = "string"
   description = "Enter the name of vpc to be created"
-  default = "my-vpc"
+  default = "my-vpc-"
 }
 
 
