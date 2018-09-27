@@ -89,3 +89,35 @@ resource "aws_vpn_gateway" "vpn_gw" {
     Name = "gateway-of-india"
   }
 }
+
+
+##### Creating another VPC for VPC peering.
+
+resource "aws_vpc" "second_vpc" {
+  cidr_block           = "${var.cidr_prefix_second}.0.0/16"
+  enable_dns_support   = "true"
+  enable_dns_hostnames = "true"
+
+  tags {
+    Name = "${var.vpc_name}-second"
+  }
+}
+
+##########################
+# VPC peering connection #
+##########################
+resource "aws_vpc_peering_connection" "this" {
+  count = "${var.create_peering ? 1 : 0}"
+  peer_owner_id = "${var.owner_account_id}"
+  peer_vpc_id   = "${aws_vpc.main.id}"
+  vpc_id        = "${aws_vpc.second_vpc.id}"
+  auto_accept   = "${var.auto_accept_peering}"
+}
+
+
+##### Printing the peering connection Id.
+
+output "vpc_peering_id" {
+  description = "Peering connection ID"
+  value       = "${element(concat(aws_vpc_peering_connection.this.*.id, list("")),0)}"
+}
