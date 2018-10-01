@@ -27,6 +27,11 @@ variable "aws_region"{
   default = "us-east-2"
 }
 
+variable "availability_zone"{
+  type = "list"
+  default = ["us-east-2a","us-east-2b"]
+}
+
 
 ##### Virtual Private gateway name
 

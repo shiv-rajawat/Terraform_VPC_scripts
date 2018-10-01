@@ -36,7 +36,7 @@ resource "aws_subnet" "private_subnet" {
   count = 6
   vpc_id            = "${aws_vpc.main.0.id}"
   cidr_block        = "${element(var.cidr_prefix, 0)}.${count.index}.0/24"
-  availability_zone = "${var.aws_region}a"
+  availability_zone = "${element(var.availability_zone,count.index)}"
 
   tags {
     Name = "${var.vpc_name}-priv-a${count.index}"
